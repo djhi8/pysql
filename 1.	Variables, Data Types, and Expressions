@@ -1,0 +1,151 @@
+A)	Declare and initialize variables of types NUMBER, VARCHAR2, and DATE, and display them
+
+DECLARE
+    v_number   NUMBER      := 100;
+    v_text     VARCHAR2(50):= 'Hello PL/SQL';
+    v_date     DATE        := SYSDATE;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Number value: ' || v_number);
+    DBMS_OUTPUT.PUT_LINE('Text value: ' || v_text);
+    DBMS_OUTPUT.PUT_LINE('Date value: ' || TO_CHAR(v_date, 'DD-MON-YYYY'));
+END;
+/
+
+
+
+
+
+
+
+
+B)	arithmetic expressions and string concatenation using variables in PL/SQL and SQL
+
+DECLARE
+    a NUMBER := 10;
+    b NUMBER := 5;
+    sum_result NUMBER;
+    full_name VARCHAR2(50);
+BEGIN
+    -- Arithmetic operation
+    sum_result := a + b;
+    -- String concatenation
+    full_name := 'Santoshi' || ' ' || 'Pable';
+    DBMS_OUTPUT.PUT_LINE('Sum is: ' || sum_result);
+    DBMS_OUTPUT.PUT_LINE('Full Name: ' || full_name);
+END;
+/
+
+
+
+
+
+
+
+
+
+
+
+
+
+C)  Use program to handle and display errors when dividing by zero
+
+DECLARE
+    a NUMBER := 10;
+    b NUMBER := 0;
+    result NUMBER;
+BEGIN
+    result := a / b;   -- This will cause division by zero
+
+    DBMS_OUTPUT.PUT_LINE('Result: ' || result);
+
+EXCEPTION
+    WHEN ZERO_DIVIDE THEN
+        DBMS_OUTPUT.PUT_LINE('Error: Division by zero is not allowed.');
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Unexpected error occurred.');
+END;
+/
+
+
+
+
+
+
+
+
+2.Control Statements
+
+A) Use IF-ELSIF-ELSE to check whether a number is odd or even
+
+DECLARE
+    num NUMBER := 15;   -- Change the number as needed
+BEGIN
+    IF MOD(num, 2) = 0 THEN
+        DBMS_OUTPUT.PUT_LINE(num || ' is an Even number');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE(num || ' is an Odd number');
+    END IF;
+END;
+/
+
+
+
+
+
+
+
+
+
+
+
+
+b) Use FOR and WHILE loops to display numbers from 1 to 10
+
+DECLARE
+    i NUMBER;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Using FOR loop:');
+    FOR i IN 1..10 LOOP
+        DBMS_OUTPUT.PUT_LINE(i);
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Using WHILE loop:');
+    i := 1;
+    WHILE i <= 10 LOOP
+        DBMS_OUTPUT.PUT_LINE(i);
+        i := i + 1;
+    END LOOP;
+END;
+/
+
+
+
+
+
+
+
+
+
+C) Use an unconstrained LOOP with EXIT to sum numbers from 1 to N and GOTO to skip a value.
+DECLARE
+    n      NUMBER := 10;   -- Sum from 1 to N
+    i      NUMBER := 1;
+    total  NUMBER := 0;
+BEGIN
+    <<start_loop>>
+    LOOP
+        -- Skip value 5 using GOTO
+        IF i = 5 THEN
+            i := i + 1;
+            GOTO start_loop;
+        END IF;
+
+        total := total + i;
+        i := i + 1;
+
+        EXIT WHEN i > n;
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Sum from 1 to ' || n || ' (skipping 5) is: ' || total);
+END;
+/
