@@ -1,0 +1,32 @@
+a) Create and raise a user-defined exception for invalid input.
+Practical 10
+
+DECLARE
+    marks NUMBER := 150;  -- Invalid input
+    invalid_marks EXCEPTION;
+BEGIN
+    IF marks < 0 OR marks > 100 THEN
+        RAISE invalid_marks;
+    END IF;
+
+    DBMS_OUTPUT.PUT_LINE('Marks entered: ' || marks);
+
+EXCEPTION
+    WHEN invalid_marks THEN
+        DBMS_OUTPUT.PUT_LINE('Error: Marks should be between 0 and 100.');
+END;
+/
+
+b)	Demonstrate PRAGMA EXCEPTION_INIT
+DECLARE
+    duplicate_value EXCEPTION;
+    PRAGMA EXCEPTION_INIT(duplicate_value, -00001);
+BEGIN
+    INSERT INTO employees (employee_id, first_name)
+    VALUES (100, 'John');  -- Assume employee_id 100 already exists
+
+EXCEPTION
+    WHEN duplicate_value THEN
+        DBMS_OUTPUT.PUT_LINE('Error: Duplicate value violates unique constraint.');
+END;
+/
