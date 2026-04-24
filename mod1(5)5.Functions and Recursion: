@@ -1,0 +1,43 @@
+a) Function to return the square of a number
+CREATE OR REPLACE FUNCTION square_num (
+    n IN NUMBER
+)
+RETURN NUMBER
+IS
+BEGIN
+    RETURN n * n;
+END;
+/
+
+b) Recursive function to calculate factorial of a number
+CREATE OR REPLACE FUNCTION factorial (
+    n IN NUMBER
+)
+RETURN NUMBER
+IS
+BEGIN
+    IF n = 0 OR n = 1 THEN
+        RETURN 1;
+    ELSE
+        RETURN n * factorial(n - 1);
+    END IF;
+END;
+/
+
+c) Call the functions from another PL/SQL block and print the result
+SET SERVEROUTPUT ON;
+
+DECLARE
+    num NUMBER := 5;
+    sq  NUMBER;
+    fact NUMBER;
+BEGIN
+    sq := square_num(num);
+    fact := factorial(num);
+
+    DBMS_OUTPUT.PUT_LINE('Square of ' || num || ' = ' || sq);
+    DBMS_OUTPUT.PUT_LINE('Factorial of ' || num || ' = ' || fact);
+END;
+/
+
+
