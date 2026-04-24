@@ -1,0 +1,27 @@
+a)Define a nested table type, initialize it, and store multiple values.
+SET SERVEROUTPUT ON;
+
+DECLARE
+    TYPE num_table IS TABLE OF NUMBER;
+    numbers num_table := num_table(10,20,30,40,50);
+BEGIN
+    FOR i IN 1..numbers.COUNT LOOP
+        DBMS_OUTPUT.PUT_LINE('Value: ' || numbers(i));
+    END LOOP;
+END;
+/
+b) Store a nested table in a column of a database table and retrieve it.
+CREATE OR REPLACE TYPE marks_table AS TABLE OF NUMBER;
+/
+CREATE TABLE student_marks (
+    student_id NUMBER,
+    marks marks_table
+) NESTED TABLE marks STORE AS marks_storage;
+INSERT INTO student_marks
+VALUES (1, marks_table(70,80,90));
+SELECT student_id, m.COLUMN_VALUE AS marks
+FROM student_marks s,
+     TABLE(s.marks) m;
+
+
+
